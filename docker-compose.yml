@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  web:
+    restart: always
+    depends_on:
+      - db
+    container_name: django
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: django
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/opt/project_files
+    networks:
+        - djangonetwork
+    environment:
+      POSTGRES_PORT: $DB_PORT
+      POSTGRES_DB: $DB_NAME
+      POSTGRES_USER: $DB_USER
+      POSTGRES_PASSWORD: $DB_PWD
+      POSTGRES_HOST: $DB_HOST
+  db:
+    container_name: postgres
+    image: postgres:alpine
+    networks:
+        - djangonetwork
+    environment:
+      POSTGRES_PORT: $DB_PORT
+      POSTGRES_DB: $DB_NAME
+      POSTGRES_USER: $DB_USER
+      POSTGRES_PASSWORD: $DB_PWD
+networks:
+  djangonetwork:
+      driver: bridge

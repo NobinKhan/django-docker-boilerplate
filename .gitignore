@@ -1,0 +1,16 @@
+.env
+requirements.txt
+db.sqlite3
+*.pyc
+*~
+/.vscode
+.idea
+__pycache__
+myvenv
+djangoenv/
+.DS_Store
+env
+_trial_temp/
+.python-version
+*/__pycache__
+*/migrations
